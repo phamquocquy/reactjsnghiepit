@@ -18,9 +18,6 @@ class Color extends Component {
             </button>
           </div>
         </div>
-        <button type="button" class="btn btn-danger">
-          button
-        </button>
       </div>
     );
   }

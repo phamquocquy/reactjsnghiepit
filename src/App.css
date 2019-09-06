@@ -28,6 +28,11 @@
   height: 50px;
 }
 
+#boxColor {
+  height: 50px;
+  widows: 50px;
+}
+
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);
