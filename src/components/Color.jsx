@@ -4,17 +4,17 @@ class Color extends Component {
   render() {
     return (
       <div>
-        <div class="panel panel-warning">
-          <div class="panel-heading">
-            <h3 class="panel-title">Panel title</h3>
+        <div className="panel panel-warning">
+          <div className="panel-heading">
+            <h3 className="panel-title">font size {this.props.fontSize}px</h3>
           </div>
-          <div class="panel-body">
-            <button type="button" class="btn btn-default">
-              button
+          <div className="panel-body">
+            <button type="button" className="btn btn-default">
+              tăng
             </button>
 
-            <button type="button" class="btn btn-default">
-              button
+            <button type="button" className="btn btn-default">
+              giảm
             </button>
           </div>
         </div>
