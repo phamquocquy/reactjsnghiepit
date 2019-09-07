@@ -18,6 +18,22 @@ class App extends Component {
     });
   };
 
+  onChangeSize = value => {
+    if (this.state.fontSize + value >= 8 && this.state.fontSize + value <= 36) {
+      this.setState({
+        fontSize: this.state.fontSize + value
+      });
+    }
+  };
+
+  onResetDefault = value => {
+    if (value) {
+      this.setState({
+        color: "red",
+        fontSize: 15
+      });
+    }
+  };
   render() {
     return (
       <div className="App">
@@ -30,11 +46,14 @@ class App extends Component {
             />
           </div>
           <div className="col-xs-6 col-sm-6 col-md-6 col-lg-6">
-            <Color fontSize={this.state.fontSize} />
-            <Reset />
+            <Color
+              fontSize={this.state.fontSize}
+              onChangeSize={this.onChangeSize}
+            />
+            <Reset onResetDefault={this.onResetDefault} />
           </div>
           <div>
-            <Content color={this.state.color} />
+            <Content color={this.state.color} fontSize={this.state.fontSize} />
           </div>
         </div>
       </div>
