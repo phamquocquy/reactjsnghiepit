@@ -30,7 +30,16 @@
 
 #boxColor {
   height: 50px;
-  widows: 50px;
+  width: 50px;
+  margin: 40px 20px;
+}
+
+.rowBox {
+  display: flex;
+}
+
+.active {
+  border: 2px solid black;
 }
 
 @keyframes App-logo-spin {
