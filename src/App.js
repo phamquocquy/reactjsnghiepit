@@ -1,5 +1,8 @@
 import React, { Component } from "react";
 import "./App.css";
+import TaskForm from "./components/TaskForm";
+import Control from "./components/Control";
+import TaskList from "./components/TaskList";
 
 export default class App extends Component {
   constructor(props) {
@@ -28,39 +31,27 @@ export default class App extends Component {
   render() {
     return (
       <div className="App">
-        <div className="container-fluid">
-          <div className="panel panel-primary">
-            <div className="panel-heading">
-              <h3 className="panel-title">form</h3>
+        <div className="container">
+          <div className="text-center">
+            <h1>Quản Lý Công Việc</h1>
+            <hr />
+          </div>
+          <div className="row">
+            <div className="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+              <TaskForm></TaskForm>
             </div>
-            <div className="panel-body">
-              <form onSubmit={this.onHandleSubmit}>
-                <div className="form-group">
-                  <label>user name</label>
-                  <input
-                    type="text"
-                    className="form-control"
-                    name="username"
-                    onChange={this.onHandleChange}
-                  />
+            <div className="col-xs-8 col-sm-8 col-md-8 col-lg-8">
+              <button type="button" className="btn btn-primary">
+                <span className="fa fa-plus mr-5"></span>Thêm Công Việc
+              </button>
+              <div className="row mt-15">
+                <Control></Control>
+              </div>
+              <div className="row mt-15">
+                <div className="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                  <TaskList></TaskList>
                 </div>
-                <div className="form-group">
-                  <label>password</label>
-                  <input
-                    type="text"
-                    className="form-control"
-                    name="password"
-                    onChange={this.onHandleChange}
-                  />
-                </div>
-
-                <button type="submit" className="btn btn-default">
-                  lưu lại
-                </button>
-                <button type="button" className="btn btn-default">
-                  xóa trắng
-                </button>
-              </form>
+              </div>
             </div>
           </div>
         </div>
