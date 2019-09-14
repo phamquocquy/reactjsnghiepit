@@ -9,26 +9,73 @@ export default class App extends Component {
     super(props);
 
     this.state = {
-      username: "",
-      password: ""
+      tasks: []
     };
   }
+  componentWillMount() {
+    if (localStorage && localStorage.getItem("tasks")) {
+      var tasks = JSON.parse(localStorage.getItem("tasks"));
+      console.log(tasks);
+      this.setState({
+        tasks: tasks
+      });
+    }
+  }
 
-  onHandleChange = e => {
-    var target = e.target;
-    var name = target.name;
-    var value = target.value;
-    console.log(target);
+  onGennerateData = () => {
+    var tasks = [
+      {
+        id: this.gennerateID(),
+        name: "học lập trình php",
+        status: true
+      },
+      {
+        id: this.gennerateID(),
+        name: "học lập trình java",
+        status: false
+      },
+      {
+        id: this.gennerateID(),
+        name: "học lập trình javascript",
+        status: false
+      },
+      {
+        id: this.gennerateID(),
+        name: "học lập trình python",
+        status: true
+      }
+    ];
     this.setState({
-      [name]: value
+      tasks: tasks
     });
+    localStorage.setItem("tasks", JSON.stringify(tasks));
   };
 
-  onHandleSubmit = e => {
-    e.preventDefault();
-    console.log(this.state);
-  };
+  s4() {
+    return Math.floor((1 + Math.random()) * 0x10000)
+      .toString(16)
+      .substring(1);
+  }
+  gennerateID() {
+    return (
+      this.s4() +
+      this.s4() +
+      "-" +
+      this.s4() +
+      this.s4() +
+      "-" +
+      this.s4() +
+      this.s4() +
+      "-" +
+      this.s4() +
+      this.s4() +
+      "-" +
+      this.s4() +
+      this.s4()
+    );
+  }
   render() {
+    var { tasks } = this.state;
     return (
       <div className="App">
         <div className="container">
@@ -44,12 +91,19 @@ export default class App extends Component {
               <button type="button" className="btn btn-primary">
                 <span className="fa fa-plus mr-5"></span>Thêm Công Việc
               </button>
+              <button
+                type="button"
+                className="btn btn-danger"
+                onClick={this.onGennerateData}
+              >
+                <span className="fa fa-plus mr-5"></span>Generate data
+              </button>
               <div className="row mt-15">
                 <Control></Control>
               </div>
               <div className="row mt-15">
                 <div className="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                  <TaskList></TaskList>
+                  <TaskList tasks={tasks}></TaskList>
                 </div>
               </div>
             </div>
