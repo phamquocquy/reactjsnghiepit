@@ -23,35 +23,6 @@ export default class App extends Component {
     }
   }
 
-  onGennerateData = () => {
-    var tasks = [
-      {
-        id: this.gennerateID(),
-        name: "học lập trình php",
-        status: true
-      },
-      {
-        id: this.gennerateID(),
-        name: "học lập trình java",
-        status: false
-      },
-      {
-        id: this.gennerateID(),
-        name: "học lập trình javascript",
-        status: false
-      },
-      {
-        id: this.gennerateID(),
-        name: "học lập trình python",
-        status: true
-      }
-    ];
-    this.setState({
-      tasks: tasks
-    });
-    localStorage.setItem("tasks", JSON.stringify(tasks));
-  };
-
   s4() {
     return Math.floor((1 + Math.random()) * 0x10000)
       .toString(16)
@@ -134,13 +105,6 @@ export default class App extends Component {
               >
                 <span className="fa fa-plus mr-5"></span>
                 Thêm Công Việc
-              </button>
-              <button
-                type="button"
-                className="btn btn-danger"
-                onClick={this.onGennerateData}
-              >
-                Generate data
               </button>
               <div className="row mt-15">
                 <Control></Control>

@@ -30,6 +30,15 @@ export default class TaskForm extends Component {
     e.preventDefault();
     console.log(this.state);
     this.props.onSubmit(this.state);
+    this.onClear();
+    this.onCloseForm();
+  };
+
+  onClear = () => {
+    this.setState({
+      name: "",
+      status: false
+    });
   };
   render() {
     return (
@@ -73,7 +82,11 @@ export default class TaskForm extends Component {
                 Thêm
               </button>
               &nbsp;
-              <button type="button" className="btn btn-danger">
+              <button
+                type="button"
+                className="btn btn-danger"
+                onClick={this.onClear}
+              >
                 Hủy Bỏ
               </button>
             </div>
