@@ -9,7 +9,8 @@ export default class App extends Component {
     super(props);
 
     this.state = {
-      tasks: []
+      tasks: [],
+      isDispalyForm: false
     };
   }
   componentWillMount() {
@@ -74,8 +75,25 @@ export default class App extends Component {
       this.s4()
     );
   }
+
+  onToggleForm = () => {
+    this.setState({
+      isDispalyForm: !this.state.isDispalyForm
+    });
+  };
+
+  onCloseForm = () => {
+    this.setState({
+      isDispalyForm: false
+    });
+  };
   render() {
-    var { tasks } = this.state;
+    var { tasks, isDispalyForm } = this.state;
+    var elmTaskForm = isDispalyForm ? (
+      <TaskForm onCloseForm={this.onCloseForm} />
+    ) : (
+      ""
+    );
     return (
       <div className="App">
         <div className="container">
@@ -84,19 +102,34 @@ export default class App extends Component {
             <hr />
           </div>
           <div className="row">
-            <div className="col-xs-4 col-sm-4 col-md-4 col-lg-4">
-              <TaskForm></TaskForm>
+            <div
+              className={
+                isDispalyForm ? "col-xs-4 col-sm-4 col-md-4 col-lg-4" : ""
+              }
+            >
+              {elmTaskForm}
             </div>
-            <div className="col-xs-8 col-sm-8 col-md-8 col-lg-8">
-              <button type="button" className="btn btn-primary">
-                <span className="fa fa-plus mr-5"></span>Thêm Công Việc
+            <div
+              className={
+                isDispalyForm
+                  ? "col-xs-8 col-sm-8 col-md-8 col-lg-8"
+                  : "col-xs-12 col-sm-12 col-md-12 col-lg-12"
+              }
+            >
+              <button
+                type="button"
+                className="btn btn-primary"
+                onClick={this.onToggleForm}
+              >
+                <span className="fa fa-plus mr-5"></span>
+                Thêm Công Việc
               </button>
               <button
                 type="button"
                 className="btn btn-danger"
                 onClick={this.onGennerateData}
               >
-                <span className="fa fa-plus mr-5"></span>Generate data
+                Generate data
               </button>
               <div className="row mt-15">
                 <Control></Control>
