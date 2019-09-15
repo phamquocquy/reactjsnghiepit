@@ -87,10 +87,21 @@ export default class App extends Component {
       isDispalyForm: false
     });
   };
+
+  onSubmit = data => {
+    console.log(data);
+    data.id = this.gennerateID();
+    var { tasks } = this.state;
+    tasks.push(data);
+    this.setState({
+      tasks: tasks
+    });
+    localStorage.setItem("tasks", JSON.stringify(tasks));
+  };
   render() {
     var { tasks, isDispalyForm } = this.state;
     var elmTaskForm = isDispalyForm ? (
-      <TaskForm onCloseForm={this.onCloseForm} />
+      <TaskForm onCloseForm={this.onCloseForm} onSubmit={this.onSubmit} />
     ) : (
       ""
     );

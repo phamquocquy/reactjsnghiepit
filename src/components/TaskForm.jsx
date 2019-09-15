@@ -1,8 +1,35 @@
 import React, { Component } from "react";
 
 export default class TaskForm extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      name: "",
+      status: false
+    };
+  }
+
   onCloseForm = () => {
     this.props.onCloseForm();
+  };
+
+  onChange = e => {
+    var target = e.target;
+    var name = target.name;
+    var value = target.value;
+    if (name === "status") {
+      value = target.value === "true" ? true : false;
+    }
+    this.setState({
+      [name]: value
+    });
+  };
+
+  onSubmit = e => {
+    e.preventDefault();
+    console.log(this.state);
+    this.props.onSubmit(this.state);
   };
   render() {
     return (
@@ -18,15 +45,27 @@ export default class TaskForm extends Component {
           </h3>
         </div>
         <div className="panel-body">
-          <form>
+          <form onSubmit={this.onSubmit}>
             <div className="form-group">
               <label>Tên :</label>
-              <input type="text" className="form-control" />
+              <input
+                type="text"
+                className="form-control"
+                name="name"
+                value={this.state.name}
+                onChange={this.onChange}
+              />
             </div>
             <label>Trạng Thái :</label>
-            <select className="form-control" required="required">
-              <option value="1">Kích Hoạt</option>
-              <option value="0">Ẩn</option>
+            <select
+              className="form-control"
+              required="required"
+              name="status"
+              value={this.state.status}
+              onChange={this.onChange}
+            >
+              <option value={true}>Kích Hoạt</option>
+              <option value={false}>Ẩn</option>
             </select>
             <br />
             <div className="text-center">
@@ -34,7 +73,7 @@ export default class TaskForm extends Component {
                 Thêm
               </button>
               &nbsp;
-              <button type="submit" className="btn btn-danger">
+              <button type="button" className="btn btn-danger">
                 Hủy Bỏ
               </button>
             </div>
