@@ -1,6 +1,8 @@
 import React, { Component } from "react";
-
 export default class TaskItem extends Component {
+  onUpdataStatus = () => {
+    this.props.onUpdataStatus(this.props.task.id);
+  };
   render() {
     var { task, index } = this.props;
     return (
@@ -14,6 +16,7 @@ export default class TaskItem extends Component {
                 ? "label label-danger"
                 : "label label-success"
             }
+            onClick={this.onUpdataStatus}
           >
             {task.status === true ? "Kích Hoạt" : "ẩn"}
           </span>

@@ -69,6 +69,29 @@ export default class App extends Component {
     });
     localStorage.setItem("tasks", JSON.stringify(tasks));
   };
+
+  onUpdataStatus = id => {
+    var { tasks } = this.state;
+    var index = this.findIndex(id);
+    if (index !== -1) {
+      tasks[index].status = !tasks[index].status;
+      this.setState({
+        tasks: tasks
+      });
+      localStorage.setItem("tasks", JSON.stringify());
+    }
+  };
+
+  findIndex = id => {
+    var { tasks } = this.state;
+    var result = -1;
+    tasks.forEach((task, index) => {
+      if (task.id === id) {
+        result = index;
+      }
+    });
+    return result;
+  };
   render() {
     var { tasks, isDispalyForm } = this.state;
     var elmTaskForm = isDispalyForm ? (
@@ -111,7 +134,10 @@ export default class App extends Component {
               </div>
               <div className="row mt-15">
                 <div className="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                  <TaskList tasks={tasks}></TaskList>
+                  <TaskList
+                    tasks={tasks}
+                    onUpdataStatus={this.onUpdataStatus}
+                  ></TaskList>
                 </div>
               </div>
             </div>
