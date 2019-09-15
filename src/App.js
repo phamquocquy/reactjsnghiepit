@@ -16,7 +16,6 @@ export default class App extends Component {
   componentWillMount() {
     if (localStorage && localStorage.getItem("tasks")) {
       var tasks = JSON.parse(localStorage.getItem("tasks"));
-      console.log(tasks);
       this.setState({
         tasks: tasks
       });
@@ -78,7 +77,7 @@ export default class App extends Component {
       this.setState({
         tasks: tasks
       });
-      localStorage.setItem("tasks", JSON.stringify());
+      localStorage.setItem("tasks", JSON.stringify(tasks));
     }
   };
 
@@ -91,6 +90,19 @@ export default class App extends Component {
       }
     });
     return result;
+  };
+
+  onDelete = id => {
+    var { tasks } = this.state;
+    var index = this.findIndex(id);
+    if (index !== -1) {
+      tasks.splice(index, 1);
+      this.setState({
+        tasks: tasks
+      });
+      localStorage.setItem("tasks", JSON.stringify(tasks));
+    }
+    this.onCloseForm();
   };
   render() {
     var { tasks, isDispalyForm } = this.state;
@@ -137,6 +149,7 @@ export default class App extends Component {
                   <TaskList
                     tasks={tasks}
                     onUpdataStatus={this.onUpdataStatus}
+                    onDelete={this.onDelete}
                   ></TaskList>
                 </div>
               </div>

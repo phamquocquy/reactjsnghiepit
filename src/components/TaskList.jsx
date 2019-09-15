@@ -11,6 +11,7 @@ export default class TaskList extends Component {
           index={index}
           task={task}
           onUpdataStatus={this.props.onUpdataStatus}
+          onDelete={this.props.onDelete}
         />
       );
     });
