@@ -6,7 +6,7 @@ export default class Control extends Component {
   render() {
     return (
       <div>
-        <Search></Search>
+        <Search onSearch={this.props.onSearch}></Search>
         <Sort></Sort>
       </div>
     );

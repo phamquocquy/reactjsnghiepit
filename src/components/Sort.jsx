@@ -15,7 +15,11 @@ export default class Sort extends Component {
           >
             Sắp Xếp <span className="fa fa-caret-square-o-down ml-5"></span>
           </button>
-          <ul className="dropdown-menu" aria-labelledby="dropdownMenu1">
+          <ul
+            className="dropdown-menu"
+            aria-labelledby="dropdownMenu1"
+            style={{ left: "40%" }}
+          >
             <li>
               <a role="button" href="#">
                 <span className="fa fa-sort-alpha-asc pr-5">Tên A-Z</span>

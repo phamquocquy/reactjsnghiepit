@@ -5,9 +5,36 @@ export default class TaskForm extends Component {
     super(props);
 
     this.state = {
+      id: "",
       name: "",
       status: false
     };
+  }
+
+  componentWillMount() {
+    if (this.props.task) {
+      this.setState({
+        id: this.props.task.id,
+        name: this.props.task.name,
+        status: this.props.task.status
+      });
+    }
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps && nextProps.task) {
+      this.setState({
+        id: nextProps.task.id,
+        name: nextProps.task.name,
+        status: nextProps.task.status
+      });
+    } else if( nextProps && nextProps.task == null){
+      this.setState({
+        id: "",
+        name: "",
+        status: false
+      })
+    }
   }
 
   onCloseForm = () => {
@@ -28,7 +55,6 @@ export default class TaskForm extends Component {
 
   onSubmit = e => {
     e.preventDefault();
-    console.log(this.state);
     this.props.onSubmit(this.state);
     this.onClear();
     this.onCloseForm();
@@ -41,11 +67,12 @@ export default class TaskForm extends Component {
     });
   };
   render() {
+    var { id } = this.state;
     return (
       <div className="panel panel-warning">
         <div className="panel-heading">
           <h3 className="panel-title">
-            Thêm Công Việc
+            {id !== "" ? "Cập nhật công việc" : "Thêm Công Việc"}
             <span
               className="fa fa-times-circle text-right"
               style={{ float: "right" }}
