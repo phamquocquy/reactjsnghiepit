@@ -3,6 +3,7 @@ import "./App.css";
 import TaskForm from "./components/TaskForm";
 import Control from "./components/Control";
 import TaskList from "./components/TaskList";
+import Demo from "./training/demo";
 
 export default class App extends Component {
   constructor(props) {
@@ -16,7 +17,9 @@ export default class App extends Component {
         name: "",
         status: -1
       },
-      keyWord: ""
+      keyWord: "",
+      by: "name",
+      value: 1
     };
   }
   componentWillMount() {
@@ -158,29 +161,53 @@ export default class App extends Component {
       keyWord: keyWord
     });
   };
+
+  onSort = (sortBy, sortValue) => {
+    this.setState({
+      by: sortBy,
+      value: sortValue
+    });
+  };
   render() {
-    var { tasks, isDispalyForm, taskEditing, filter, keyWord } = this.state;
-    console.log(filter, "filter");
+    var {
+      tasks,
+      isDispalyForm,
+      taskEditing,
+      filter,
+      keyWord,
+      by,
+      value
+    } = this.state;
     if (filter) {
       if (filter.name) {
-        console.log(filter.name, "name");
         tasks = tasks.filter(task => {
           return task.name.toLowerCase().indexOf(filter.name) !== -1;
         });
       }
-      console.log(typeof filter.status, "status");
       tasks = tasks.filter(task => {
         if (filter.status === -1) {
-          console.log("vao ------");
           return task;
         } else {
-          return task.status == (filter.status == 1 ? true : false);
+          return task.status === (filter.status === 1 ? true : false);
         }
       });
     }
     if (keyWord) {
       tasks = tasks.filter(task => {
         return task.name.toLowerCase().indexOf(keyWord) !== -1;
+      });
+    }
+    if (by === "name") {
+      tasks.sort((a, b) => {
+        if (a.status > b.status) return value;
+        else if (a.status < b.status) return value;
+        else return 0;
+      });
+    } else {
+      tasks.sort((a, b) => {
+        if (a.name > b.name) return value;
+        else if (a.name < b.name) return value;
+        else return 0;
       });
     }
     var elmTaskForm = isDispalyForm ? (
@@ -223,7 +250,12 @@ export default class App extends Component {
                 Thêm Công Việc
               </button>
               <div className="row mt-15">
-                <Control onSearch={this.onSearch}></Control>
+                <Control
+                  onSearch={this.onSearch}
+                  onSort={this.onSort}
+                  by={by}
+                  value={value}
+                ></Control>
               </div>
               <div className="row mt-15">
                 <div className="col-xs-12 col-sm-12 col-md-12 col-lg-12">
