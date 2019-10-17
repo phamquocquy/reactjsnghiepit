@@ -3,6 +3,7 @@ import "./App.css";
 import TaskForm from "./components/TaskForm";
 import Control from "./components/Control";
 import TaskList from "./components/TaskList";
+import Demo from "./trainning/demo";
 
 export default class App extends Component {
   constructor(props) {
@@ -160,10 +161,8 @@ export default class App extends Component {
   };
   render() {
     var { tasks, isDispalyForm, taskEditing, filter, keyWord } = this.state;
-    console.log(filter, "filter");
     if (filter) {
       if (filter.name) {
-        console.log(filter.name, "name");
         tasks = tasks.filter(task => {
           return task.name.toLowerCase().indexOf(filter.name) !== -1;
         });
@@ -171,10 +170,9 @@ export default class App extends Component {
       console.log(typeof filter.status, "status");
       tasks = tasks.filter(task => {
         if (filter.status === -1) {
-          console.log("vao ------");
           return task;
         } else {
-          return task.status == (filter.status == 1 ? true : false);
+          return task.status === (filter.status === 1 ? true : false);
         }
       });
     }
