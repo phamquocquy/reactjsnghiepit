@@ -3,15 +3,14 @@ import "./App.css";
 import TaskForm from "./components/TaskForm";
 import Control from "./components/Control";
 import TaskList from "./components/TaskList";
-import Demo from "./training/demo";
+import { connect } from "react-redux";
+import * as actions from "./actions/index";
 
-export default class App extends Component {
+class App extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      tasks: [],
-      isDispalyForm: false,
       taskEditing: null,
       filter: {
         name: "",
@@ -22,51 +21,22 @@ export default class App extends Component {
       value: 1
     };
   }
-  componentWillMount() {
-    if (localStorage && localStorage.getItem("tasks")) {
-      var tasks = JSON.parse(localStorage.getItem("tasks"));
-      this.setState({
-        tasks: tasks
-      });
-    }
-  }
-
-  s4() {
-    return Math.floor((1 + Math.random()) * 0x10000)
-      .toString(16)
-      .substring(1);
-  }
-  gennerateID() {
-    return (
-      this.s4() +
-      this.s4() +
-      "-" +
-      this.s4() +
-      this.s4() +
-      "-" +
-      this.s4() +
-      this.s4() +
-      "-" +
-      this.s4() +
-      this.s4() +
-      "-" +
-      this.s4() +
-      this.s4()
-    );
-  }
 
   onToggleForm = () => {
-    if (this.state.isDispalyForm && this.state.taskEditing !== null) {
-      this.setState({
-        isDispalyForm: true,
-        taskEditing: null
-      });
-    } else {
-      this.setState({
-        isDispalyForm: !this.state.isDispalyForm,
-        taskEditing: null
-      });
-    }
+    console.log("vaffff");
+    this.props.onToggle();
+
+    // if (this.state.isDispalyForm && this.state.taskEditing !== null) {
+    //   this.setState({
+    //     isDispalyForm: true,
+    //     taskEditing: null
+    //   });
+    // } else {
+    //   this.setState({
+    //     isDispalyForm: !this.state.isDispalyForm,
+    //     taskEditing: null
+    //   });
+    // }
   };
 
   onCloseForm = () => {
@@ -79,24 +49,6 @@ export default class App extends Component {
     this.setState({
       isDispalyForm: true
     });
-  };
-
-  onSubmit = data => {
-    var { tasks } = this.state;
-    console.log(data.id);
-    if (data.id === undefined) {
-      console.log("1");
-      data.id = this.gennerateID();
-      tasks.push(data);
-    } else {
-      console.log("2");
-      var index = this.findIndex(data.id);
-      tasks[index] = data;
-    }
-    this.setState({
-      tasks: tasks
-    });
-    localStorage.setItem("tasks", JSON.stringify(tasks));
   };
 
   onUpdataStatus = id => {
@@ -156,7 +108,6 @@ export default class App extends Component {
   };
 
   onSearch = keyWord => {
-    console.log(keyWord);
     this.setState({
       keyWord: keyWord
     });
@@ -170,55 +121,57 @@ export default class App extends Component {
   };
   render() {
     var {
-      tasks,
-      isDispalyForm,
       taskEditing,
-      filter,
-      keyWord,
+      //  filter,
+      // keyWord,
       by,
       value
     } = this.state;
-    if (filter) {
-      if (filter.name) {
-        tasks = tasks.filter(task => {
-          return task.name.toLowerCase().indexOf(filter.name) !== -1;
-        });
-      }
-      tasks = tasks.filter(task => {
-        if (filter.status === -1) {
-          return task;
-        } else {
-          return task.status === (filter.status === 1 ? true : false);
-        }
-      });
-    }
-    if (keyWord) {
-      tasks = tasks.filter(task => {
-        return task.name.toLowerCase().indexOf(keyWord) !== -1;
-      });
-    }
-    if (by === "name") {
-      tasks.sort((a, b) => {
-        if (a.status > b.status) return value;
-        else if (a.status < b.status) return value;
-        else return 0;
-      });
-    } else {
-      tasks.sort((a, b) => {
-        if (a.name > b.name) return value;
-        else if (a.name < b.name) return value;
-        else return 0;
-      });
-    }
-    var elmTaskForm = isDispalyForm ? (
-      <TaskForm
-        onCloseForm={this.onCloseForm}
-        onSubmit={this.onSubmit}
-        task={taskEditing}
-      />
-    ) : (
-      ""
-    );
+    console.log(this.props, "aaaaa");
+    var { isDispalyForm } = this.props;
+    console.log(isDispalyForm, "dis");
+    // if (filter) {
+    //   if (filter.name) {
+    //     tasks = tasks.filter(task => {
+    //       return task.name.toLowerCase().indexOf(filter.name) !== -1;
+    //     });
+    //   }
+    //   tasks = tasks.filter(task => {
+    //     if (filter.status === -1) {
+    //       return task;
+    //     } else {
+    //       return task.status === (filter.status === 1 ? true : false);
+    //     }
+    //   });
+    // }
+    // if (keyWord) {
+    //   tasks = tasks.filter(task => {
+    //     return task.name.toLowerCase().indexOf(keyWord) !== -1;
+    //   });
+    // }
+    // if (by === "name") {
+    //   tasks.sort((a, b) => {
+    //     if (a.status > b.status) return value;
+    //     else if (a.status < b.status) return value;
+    //     else return 0;
+    //   });
+    // } else {
+    //   tasks.sort((a, b) => {
+    //     if (a.name > b.name) return value;
+    //     else if (a.name < b.name) return value;
+    //     else return 0;
+    //   });
+    // }
+    var elmTaskForm =
+      isDispalyForm === true ? (
+        <TaskForm
+          onCloseForm={this.onCloseForm}
+          onSubmit={this.onSubmit}
+          task={taskEditing}
+        />
+      ) : (
+        ""
+      );
     return (
       <div className="App">
         <div className="container">
@@ -260,7 +213,6 @@ export default class App extends Component {
               <div className="row mt-15">
                 <div className="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                   <TaskList
-                    tasks={tasks}
                     onUpdataStatus={this.onUpdataStatus}
                     onDelete={this.onDelete}
                     onUpdate={this.onUpdate}
@@ -275,3 +227,24 @@ export default class App extends Component {
     );
   }
 }
+
+const mapStateToProps = state => {
+  console.log(state);
+  console.log();
+  return {
+    isDispalyForm: state.isDispalyForm
+  };
+};
+
+const mapDispatchToProps = (dispatch, props) => {
+  return {
+    onToggle: () => {
+      dispatch(actions.toggleForm());
+    }
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(App);

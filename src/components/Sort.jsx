@@ -25,6 +25,7 @@ export default class Sort extends Component {
           >
             <li onClick={() => this.onClick("name", 1)}>
               <a
+                href={null}
                 role="button"
                 className={
                   this.props.by === "name" && this.props.value === 1
@@ -37,6 +38,7 @@ export default class Sort extends Component {
             </li>
             <li onClick={() => this.onClick("name", -1)}>
               <a
+                href={null}
                 role="button"
                 className={
                   this.props.by === "name" && this.props.value === -1
@@ -50,6 +52,7 @@ export default class Sort extends Component {
             <li role="separator" className="divider"></li>
             <li onClick={() => this.onClick("status", 1)}>
               <a
+                href={null}
                 role="button"
                 className={
                   this.props.by === "status" && this.props.value === 1
@@ -62,6 +65,7 @@ export default class Sort extends Component {
             </li>
             <li onClick={() => this.onClick("status", -1)}>
               <a
+                href={null}
                 role="button"
                 className={
                   this.props.by === "status" && this.props.value === -1
