@@ -22,8 +22,11 @@ class App extends Component {
     };
   }
 
+  componentDidMount() {
+    console.log(this.props, 'propsssss')
+  }
+
   onToggleForm = () => {
-    console.log("vaffff");
     this.props.onToggle();
 
     // if (this.state.isDispalyForm && this.state.taskEditing !== null) {
@@ -127,9 +130,9 @@ class App extends Component {
       by,
       value
     } = this.state;
-    console.log(this.props, "aaaaa");
+    //console.log(this.props, "aaaaa");
     var { isDispalyForm } = this.props;
-    console.log(isDispalyForm, "dis");
+    console.log('render', this.props);
     // if (filter) {
     //   if (filter.name) {
     //     tasks = tasks.filter(task => {
@@ -229,10 +232,8 @@ class App extends Component {
 }
 
 const mapStateToProps = state => {
-  console.log(state);
-  console.log();
   return {
-    isDispalyForm: state.isDispalyForm
+    isDispalyForm: state.isDisplayForm
   };
 };
 
