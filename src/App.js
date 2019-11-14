@@ -203,7 +203,7 @@ class App extends Component {
                 onClick={this.onToggleForm}
               >
                 <span className="fa fa-plus mr-5"></span>
-                Thêm Công Việc
+                Thêm Công Việc test
               </button>
               <div className="row mt-15">
                 <Control
