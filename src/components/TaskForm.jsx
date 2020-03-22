@@ -14,28 +14,26 @@ class TaskForm extends Component {
   }
 
   componentWillMount() {
-    if (this.props.task) {
+    if (this.props.editTask && this.props.editTask.id != null) {
       this.setState({
-        id: this.props.task.id,
-        name: this.props.task.name,
-        status: this.props.task.status
+        id: this.props.editTask.id,
+        name: this.props.editTask.name,
+        status: this.props.editTask.status
       });
+    }else{
+      this.onClear()
     }
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps && nextProps.task) {
+    if (nextProps && nextProps.editTask) {
       this.setState({
-        id: nextProps.task.id,
-        name: nextProps.task.name,
-        status: nextProps.task.status
+        id: nextProps.editTask.id,
+        name: nextProps.editTask.name,
+        status: nextProps.editTask.status
       });
-    } else if (nextProps && nextProps.task == null) {
-      this.setState({
-        id: "",
-        name: "",
-        status: false
-      });
+    }else{
+      this.onClear()
     }
   }
 
@@ -57,7 +55,7 @@ class TaskForm extends Component {
 
   onSubmit = e => {
     e.preventDefault();
-    this.props.onAddTask(this.state);
+    this.props.onSaveTask(this.state);
     this.onClear();
     this.onCloseForm();
   };
@@ -70,6 +68,7 @@ class TaskForm extends Component {
   };
   render() {
     var { id } = this.state;
+    if(!this.props.isDispalyForm) return '';
     return (
       <div className="panel panel-warning">
         <div className="panel-heading">
@@ -128,14 +127,22 @@ class TaskForm extends Component {
 
 const mapStateToProps = state => {
   return {
+    isDispalyForm: state.isDisplayForm,
+    editTask: state.editTask
   };
 };
 
 const mapDispatchToProps = (dispatch, props) => {
   return {
-    onAddTask: task => {
-      dispatch(actions.addTask(task));
-    }
+    onSaveTask: task => {
+      dispatch(actions.onSaveTask(task));
+    },
+    onToggle: () => {
+      dispatch(actions.toggleForm());
+    },
+    onCloseForm: () => {
+      dispatch(actions.closeForm())
+    },
   };
 };
 

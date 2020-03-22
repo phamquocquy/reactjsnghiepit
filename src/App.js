@@ -43,51 +43,13 @@ class App extends Component {
   };
 
   onCloseForm = () => {
-    this.setState({
-      isDispalyForm: false
-    });
+    this.props.onCloseForm();
   };
 
   onShowForm = () => {
     this.setState({
       isDispalyForm: true
     });
-  };
-
-  onUpdataStatus = id => {
-    var { tasks } = this.state;
-    var index = this.findIndex(id);
-    if (index !== -1) {
-      tasks[index].status = !tasks[index].status;
-      this.setState({
-        tasks: tasks
-      });
-      localStorage.setItem("tasks", JSON.stringify(tasks));
-    }
-  };
-
-  findIndex = id => {
-    var { tasks } = this.state;
-    var result = -1;
-    tasks.forEach((task, index) => {
-      if (task.id === id) {
-        result = index;
-      }
-    });
-    return result;
-  };
-
-  onDelete = id => {
-    var { tasks } = this.state;
-    var index = this.findIndex(id);
-    if (index !== -1) {
-      tasks.splice(index, 1);
-      this.setState({
-        tasks: tasks
-      });
-      localStorage.setItem("tasks", JSON.stringify(tasks));
-    }
-    this.onCloseForm();
   };
 
   onUpdate = id => {
@@ -124,9 +86,6 @@ class App extends Component {
   };
   render() {
     var {
-      taskEditing,
-      //  filter,
-      // keyWord,
       by,
       value
     } = this.state;
@@ -165,16 +124,6 @@ class App extends Component {
     //     else return 0;
     //   });
     // }
-    var elmTaskForm =
-      isDispalyForm === true ? (
-        <TaskForm
-          onCloseForm={this.onCloseForm}
-          onSubmit={this.onSubmit}
-          task={taskEditing}
-        />
-      ) : (
-        ""
-      );
     return (
       <div className="App">
         <div className="container">
@@ -188,7 +137,7 @@ class App extends Component {
                 isDispalyForm ? "col-xs-4 col-sm-4 col-md-4 col-lg-4" : ""
               }
             >
-              {elmTaskForm}
+              <TaskForm />
             </div>
             <div
               className={
@@ -216,9 +165,6 @@ class App extends Component {
               <div className="row mt-15">
                 <div className="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                   <TaskList
-                    onUpdataStatus={this.onUpdataStatus}
-                    onDelete={this.onDelete}
-                    onUpdate={this.onUpdate}
                     onFilter={this.onFilter}
                   ></TaskList>
                 </div>
@@ -241,6 +187,9 @@ const mapDispatchToProps = (dispatch, props) => {
   return {
     onToggle: () => {
       dispatch(actions.toggleForm());
+    },
+    onCloseForm: () => {
+      dispatch(actions.closeForm());
     }
   };
 };
