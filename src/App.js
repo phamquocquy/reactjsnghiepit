@@ -22,24 +22,13 @@ class App extends Component {
     };
   }
 
-  componentDidMount() {
-    console.log(this.props, 'propsssss')
-  }
-
   onToggleForm = () => {
     this.props.onToggle();
-
-    // if (this.state.isDispalyForm && this.state.taskEditing !== null) {
-    //   this.setState({
-    //     isDispalyForm: true,
-    //     taskEditing: null
-    //   });
-    // } else {
-    //   this.setState({
-    //     isDispalyForm: !this.state.isDispalyForm,
-    //     taskEditing: null
-    //   });
-    // }
+    this.props.onClearTask({
+      id: '',
+      name: '',
+      status: false
+    })
   };
 
   onCloseForm = () => {
@@ -89,9 +78,7 @@ class App extends Component {
       by,
       value
     } = this.state;
-    //console.log(this.props, "aaaaa");
     var { isDispalyForm } = this.props;
-    console.log('render', this.props);
     // if (filter) {
     //   if (filter.name) {
     //     tasks = tasks.filter(task => {
@@ -190,7 +177,10 @@ const mapDispatchToProps = (dispatch, props) => {
     },
     onCloseForm: () => {
       dispatch(actions.closeForm());
-    }
+    },
+    onClearTask: task => {
+      dispatch(actions.saveTask(task));
+    },
   };
 };
 

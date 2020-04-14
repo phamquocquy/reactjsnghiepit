@@ -73,7 +73,10 @@ const mapDispatchToProps = (dispatch, props) => {
     },
     onEditTask: (task) => {
       dispatch(actions.editTask(task));
-    }
+    },
+    onCloseForm: () => {
+      dispatch(actions.closeForm())
+    },
   }
 }
 

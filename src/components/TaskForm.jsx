@@ -53,22 +53,26 @@ class TaskForm extends Component {
     });
   };
 
-  onSubmit = e => {
-    e.preventDefault();
-    this.props.onSaveTask(this.state);
-    this.onClear();
-    this.onCloseForm();
-  };
-
   onClear = () => {
     this.setState({
       name: "",
       status: false
     });
   };
+
+  onSubmit = e => {
+    console.log(this.state);
+    e.preventDefault();
+    this.props.onSaveTask(this.state);
+    this.onClear();
+    this.onCloseForm();
+  };
+
   render() {
     var { id } = this.state;
-    if(!this.props.isDispalyForm) return '';
+    if(!this.props.isDispalyForm){
+      return null;
+    }
     return (
       <div className="panel panel-warning">
         <div className="panel-heading">
@@ -107,7 +111,7 @@ class TaskForm extends Component {
             <br />
             <div className="text-center">
               <button type="submit" className="btn btn-warning">
-                Thêm
+                Lưu
               </button>
               &nbsp;
               <button
@@ -135,7 +139,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = (dispatch, props) => {
   return {
     onSaveTask: task => {
-      dispatch(actions.onSaveTask(task));
+      dispatch(actions.saveTask(task));
     },
     onToggle: () => {
       dispatch(actions.toggleForm());

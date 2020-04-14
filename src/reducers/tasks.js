@@ -25,7 +25,7 @@ var gennerateID = () => {
 };
 var data = JSON.parse(localStorage.getItem("tasks"));
 
-var findIndex = (id, tasks) => {
+var findIndex = (tasks, id) => {
   var result = -1;
   tasks.forEach((task, index) => {
     if (task.id === id) {
@@ -45,8 +45,9 @@ var myReducer = (state = initialState, action) => {
       var task = {
         id: action.task.id,
         name: action.task.name,
-        status: action.task.status === "true" ? true : false
+        status: action.task.status
       };
+      console.log(action.task,'task')
       if(!task.id){
         task.id = gennerateID();
         state.push(task);
@@ -58,7 +59,7 @@ var myReducer = (state = initialState, action) => {
       return [...state];
     case types.UPDATE_STATUS:
       let id = action.id;
-      index = findIndex(id, state);
+      index = findIndex(state, id);
       state[index] = {
           ...state[index],
           status: !state[index].status
@@ -67,7 +68,7 @@ var myReducer = (state = initialState, action) => {
       return [...state]
     case types.DELETE_TASK:
       let idDelete = action.id;
-      let indexDelete = findIndex(idDelete, state);
+      let indexDelete = findIndex(state, idDelete);
       state.splice(indexDelete, 1);
       localStorage.setItem("tasks", JSON.stringify(state));
       return [...state]
